@@ -14,9 +14,10 @@ const result = userNames1.map ((currentUserName) => {
    const splits = currentUserName.split(" "); // розбиття рядку на масиви окремо для прізвища, ім'я і по-батькові
    //console.log(splits);
     let initials = splits.map((item) => item[0]); // створюю новий масив через map, в який записую елемент з індексом 0 
-    console.log (initials.join('.')); // додаю до записаного елемента крапку через join
-   return initials;
+    //console.log (initials.join('.')); // додаю до записаного елемента крапку через join
+   return initials.join('.');
 });
+console.log(result); 
 
 // 2 Задача на фільтрування масиву
 
