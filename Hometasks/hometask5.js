@@ -1,35 +1,27 @@
 "use strict";
 
 // 2 Задача про перетворення об'єкту
-/*
-    const priceData = {
-    Apples: '23.4',
-    BANANAS: '48',
-    oRAngGEs: '48.7584',
-    };
-    //console.log (priceData);
 
-    function optimizer(data) {
-        const newObject = {};
+const priceData = {
+  Apples: "23.4",
+  BANANAS: "48",
+  oRAngGEs: "48.7584",
+};
 
-        for (let key of Object.keys (data)) {
-            console.log (key);
-        }
-        for (let value of Object.values (data)) {
-            console.log (value);
-        }
+function changeToLowerCase(data) {
+  const newObject = {};
 
-    //     Object.keys(obj).forEach(key); //forEach запускаається на кожній ітерації, Object.keys(obj), щоб витягнути всі ключі 
-    //     newObject [key.toLowerCase()] = obj[key];
+  for (let key of Object.keys(data)) {
+    console.log(key);
+    const valueByKey = data[key];
+    console.log(valueByKey);
+    newObject[key.toLowerCase()] = Number(valueByKey).toFixed(2);
+  }
+  return newObject;
+}
 
-        return newObject;
-    };
-    // console.log (newObject);
-    
-    
-
-    let updatedPriceData = optimizer(priceData);
-    console.log(updatedPriceData) // {apples: '23.40', bananas: '48.00', oranges: '48.76'} */
+let updatedPriceData = changeToLowerCase(priceData);
+console.log(updatedPriceData); // {apples: '23.40', bananas: '48.00', oranges: '48.76'}
 
 // 1 Задача про обчислення різниці часу
 
@@ -37,7 +29,7 @@ function calculateDifference(startDate, endDate) {
   console.log("Початкова дата", startDate);
   console.log("Кінцева дата", endDate);
 
-  return endDate - startDate; // повертає часовий період між двoма датами, згідно розмірності
+  return endDate - startDate; // повертає часовий період між двoма датами
 }
 
 function formatDifference(startDate, endDate, dimension) {
@@ -66,7 +58,7 @@ function formatDifference(startDate, endDate, dimension) {
 
 const startDate = new Date("2024-01-01");
 const endDate = new Date();
-const dimension = "seconds";
+const dimension = "days"; // Вибрати розмірність і вказати її у цій стрічці (days, hours. minutes, seconds)
 const result = formatDifference(startDate, endDate, dimension);
 
 console.log(result);
