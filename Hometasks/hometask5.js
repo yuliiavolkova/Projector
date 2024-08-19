@@ -32,7 +32,11 @@ function calculateDifference(startDate, endDate) {
   return endDate - startDate; // повертає часовий період між двoма датами
 }
 
-function formatDifference(startDate, endDate, dimension) {
+function formatDifference(
+  startDate,
+  endDate = new Date(),
+  dimension = "seconds"
+) {
   const dateDifference = calculateDifference(startDate, endDate);
 
   let amount = 0;
