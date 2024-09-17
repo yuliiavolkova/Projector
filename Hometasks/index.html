@@ -3,27 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Background and Time</title>
-    <style>
-      body {
-        background-color: #f0f0f0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      #timeFormat {
-        margin-bottom: 15px;
-        font-size: 16px;
-        display: none;
-      }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Список завдань</title>
   </head>
+
   <body>
-    <div>
-      <button id="button-Turnoff">Turn off</button>
-      <p id="timeFormat"></p>
+    <div class="wrapper">
+      <div class="create-task-block">
+        <form class="create-task-form">
+          <h3 class="task-title">Нове завдання</h3>
+          <div class="input-field">
+            <input type="text" name="task" class="task-input" />
+          </div>
+          <button type="submit">Додати завдання</button>
+        </form>
+      </div>
+
+      <div class="filter-task-block">
+        <h3 class="task-title">Список завдань</h3>
+        <div class="input-field">
+          <input
+            type="text"
+            name="filter"
+            class="filter-input"
+            placeholder="Пошук завдань"
+          />
+        </div>
+        <ul class="collection"></ul>
+        <button class="clear-tasks">Видалити всі завдання</button>
+      </div>
     </div>
-    <script src="hometask9.js"></script>
+    <script src="./hometask10.js"></script>
   </body>
 </html>
