@@ -28,8 +28,8 @@ function renderTasks() {
     const tasks = JSON.parse(getTasksFromLocalStorage());
 
     // Створюємо елемент для кожної задачі
-    tasks.forEach((task, index) => {
-      createTask(task, index);
+    tasks.forEach((task) => {
+      createTask(task);
     });
   }
 }
@@ -37,18 +37,19 @@ function renderTasks() {
 // Отримуємо індекс останньої задачі для присвоєння новим задачам
 function getLastTasksIndex() {
   if (getTasksFromLocalStorage()) {
-    return JSON.parse(getTasksFromLocalStorage()).length;
+    const elements = JSON.parse(getTasksFromLocalStorage());
+    return elements.length ? elements.at(-1).id + 1 : 0;
   }
 
   return 0;
 }
 
 // Створення HTML-елементу для задачі
-function createTask(task, index) {
+function createTask(task) {
   const li = document.createElement("li");
-  li.innerHTML = task;
+  li.innerHTML = task.name;
   li.classList.add("task");
-  li.setAttribute("data-id", index); // Присвоюємо задачі унікальний індекс
+  li.setAttribute("data-id", task.id); // Присвоюємо задачі унікальний індекс
 
   // Додаємо кнопку для видалення задачі
   const container = document.createElement("div");
@@ -57,7 +58,9 @@ function createTask(task, index) {
   button.innerHTML = "x";
   button.className = "button-icon button-delete";
   button.addEventListener("click", function (event) {
-    removeTask(event);
+    console.log("🚀 ~  task.id:", task.id);
+
+    removeTask(task.id);
   });
 
   const editButton = document.createElement("button");
@@ -66,8 +69,11 @@ function createTask(task, index) {
   editButton.addEventListener("click", function (event) {
     const tasks = JSON.parse(getTasksFromLocalStorage()); // Отримуємо задачі з LocalStorage
 
-    // Фільтруємо задачі, залишаючи лише ті, які не мають індексу видаленої задачі
-    tasks[index] = prompt("Enter text");
+    const taskIndex = tasks.findIndex((t) => t.id == task.id);
+    tasks[taskIndex] = {
+      ...task,
+      name: prompt("Enter text"),
+    };
 
     removeTasks(); // Видаляємо всі задачі з інтерфейсу
     setTasksToLocalStorage(tasks); // Зберігаємо оновлений список задач
@@ -96,8 +102,14 @@ function addTask(event) {
 
   const currentIndex = getLastTasksIndex(); // Отримуємо індекс для нової задачі
 
-  createTask(inputValue, currentIndex); // Створюємо нову задачу
-  setTaskToLocalStorage(inputValue); // Зберігаємо задачу в LocalStorage
+  const newTask = {
+    id: currentIndex,
+    name: inputValue,
+  };
+
+  createTask(newTask, currentIndex); // Створюємо нову задачу
+
+  setTaskToLocalStorage(newTask); // Зберігаємо задачу в LocalStorage
 
   currentForm.reset(); // Очищаємо поле вводу
 }
@@ -137,14 +149,14 @@ function removeTasks() {
 }
 
 // Видалення окремої задачі
-function removeTask(event) {
+function removeTask(taskId) {
   if (event.target.classList.contains("button-delete")) {
     const li = event.target.closest(".task"); // Знаходимо батьківський елемент (задачу)
     const tasks = JSON.parse(getTasksFromLocalStorage()); // Отримуємо задачі з LocalStorage
 
     // Фільтруємо задачі, залишаючи лише ті, які не мають індексу видаленої задачі
-    const filteredTasks = tasks.filter((_, index) => {
-      return index.toString() !== li.getAttribute("data-id");
+    const filteredTasks = tasks.filter((task, index) => {
+      return task.id !== taskId;
     });
 
     removeTasks(); // Видаляємо всі задачі з інтерфейсу
